@@ -82,3 +82,55 @@ INSERT INTO grades (student_id, assignment_id, grade_id, grade)
          (400, 3, 15, 75),
          (400, 4, 16, 95);
 ```
+### Tak 3 
+```
+SELECT * FROM departments;
+
+SELECT * FROM courses;
+
+SELECT * FROM assignments;
+
+SELECT * FROM students;
+
+SELECT * FROM grades;
+```
+Which outputs:
+<img width="813" alt="Screenshot 2023-04-18 at 9 28 03 PM" src="https://user-images.githubusercontent.com/57672853/232943255-a6644ff6-302c-48b5-8ea3-74401f1eda50.png">
+<img width="800" alt="Screenshot 2023-04-18 at 9 28 33 PM" src="https://user-images.githubusercontent.com/57672853/232943256-08aa9e71-7ad0-4bee-a3a2-51e14d729d04.png">
+<img width="801" alt="Screenshot 2023-04-18 at 9 29 03 PM" src="https://user-images.githubusercontent.com/57672853/232943257-2c400240-0c79-49b4-bbc4-2598e8ad096a.png">
+<img width="800" alt="Screenshot 2023-04-18 at 9 29 18 PM" src="https://user-images.githubusercontent.com/57672853/232943258-301a55a4-c284-402f-bdf5-58c87f1a02d5.png">
+<img width="804" alt="Screenshot 2023-04-18 at 9 31 57 PM" src="https://user-images.githubusercontent.com/57672853/232944185-a390a7d5-8d2a-4128-8901-a4db0e812958.png">
+
+### Task 4
+```
+SELECT AVG(grade) as average_grade
+FROM grades
+WHERE assignment_id = [assignment_id];
+SELECT MAX(grade) as highest_grade
+FROM grades
+WHERE assignment_id = [assignment_id];
+
+SELECT MIN(grade) as lowest_grade
+FROM grades
+WHERE assignment_id = [assignment_id];
+```
+Which outputs: 
+89.375
+100
+67
+
+### Task 5
+```
+SELECT s.* 
+FROM students s JOIN courses c ON s.course_id = c.course_id
+where c.course_id = 1;
+```
+<img width="802" alt="Screenshot 2023-04-18 at 9 39 36 PM" src="https://user-images.githubusercontent.com/57672853/232944658-e0501d2b-f232-4dd1-ad2e-cbc7759896a8.png">
+
+### Task 6
+```
+SELECT s.*, g.*
+FROM students s JOIN grades g ON s.student_id = g.student_id JOIN assignments a ON g.assignment_id = a.assignment_id
+WHERE s.course_id = 1;
+```
+<img width="800" alt="Screenshot 2023-04-18 at 9 40 01 PM" src="https://user-images.githubusercontent.com/57672853/232944826-78b722d5-85a0-455e-a551-94476dbf616d.png">
