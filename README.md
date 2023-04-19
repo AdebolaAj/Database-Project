@@ -100,6 +100,7 @@ Which outputs:
 <img width="801" alt="Screenshot 2023-04-18 at 9 29 03 PM" src="https://user-images.githubusercontent.com/57672853/232943257-2c400240-0c79-49b4-bbc4-2598e8ad096a.png">
 <img width="800" alt="Screenshot 2023-04-18 at 9 29 18 PM" src="https://user-images.githubusercontent.com/57672853/232943258-301a55a4-c284-402f-bdf5-58c87f1a02d5.png">
 <img width="804" alt="Screenshot 2023-04-18 at 9 31 57 PM" src="https://user-images.githubusercontent.com/57672853/232944185-a390a7d5-8d2a-4128-8901-a4db0e812958.png">
+The score still being NULL because the final grade has not being calculated.
 
 ### Task 4
 ```
@@ -134,3 +135,83 @@ FROM students s JOIN grades g ON s.student_id = g.student_id JOIN assignments a 
 WHERE s.course_id = 1;
 ```
 <img width="800" alt="Screenshot 2023-04-18 at 9 40 01 PM" src="https://user-images.githubusercontent.com/57672853/232944826-78b722d5-85a0-455e-a551-94476dbf616d.png">
+
+### Task 7
+```
+INSERT INTO assignments (assignment_id, category, name, percentage, course_id) 
+VALUES (5, 'Final Exam', 'Final Exam', 30.0, 1);
+SELECT * FROM assignments;
+
+INSERT INTO grades (student_id, assignment_id, grade_id, grade) 
+  VALUES (100, 5, 17, 95),
+         (200, 5, 18, 100),
+         (300, 5, 19, 96),
+         (400, 5, 20, 96);
+```
+<img width="800" alt="Screenshot 2023-04-18 at 9 40 43 PM" src="https://user-images.githubusercontent.com/57672853/232945687-94a6bba4-dac3-4401-a5c0-624868717ab9.png">
+
+### Task 8
+```
+UPDATE assignments
+SET percentage = 30.0
+WHERE category = "Tests" and course_id = 1;
+
+UPDATE assignments
+SET percentage = 10.0
+WHERE category = "Homework" and course_id = 1;
+SELECT * FROM assignments;
+```
+<img width="804" alt="Screenshot 2023-04-18 at 9 56 16 PM" src="https://user-images.githubusercontent.com/57672853/232946854-625579c7-b1be-4e4f-bb75-00bbab3ff695.png">
+
+### Task 9
+```
+UPDATE grades
+SET grade = grade + 2
+WHERE assignment_id = 2;
+
+SELECT * FROM grades;
+```
+<img width="804" alt="Screenshot 2023-04-18 at 9 56 42 PM" src="https://user-images.githubusercontent.com/57672853/232946898-fe139e8c-f26f-4fee-8b0e-befaf70e80a3.png">
+
+### Task 10
+
+```
+UPDATE grades
+SET grade = grade + 2
+WHERE assignment_id = 2
+AND student_id IN (
+  SELECT student_id FROM students WHERE lower(last_name) LIKE '%q%'
+);
+SELECT * FROM grades;
+```
+<img width="799" alt="Screenshot 2023-04-18 at 9 57 05 PM" src="https://user-images.githubusercontent.com/57672853/232947075-50100995-8c01-46b6-9b53-1655884232d7.png">
+
+### Task 11
+
+```
+
+SELECT 
+  s.first_name, 
+  s.last_name, 
+SUM((a.percentage * g.grade)/100) AS grade
+FROM students s
+JOIN grades g ON s.student_id = g.student_id
+JOIN assignments a ON g.assignment_id = a.assignment_id
+GROUP BY s.first_name, s.last_name
+HAVING s.student_id = 100;
+```
+Adebola|Ajayi|94
+### Task 12
+
+```
+SELECT 
+  s.first_name, 
+  s.last_name,
+SUM((a.percentage * g.grade - (SELECT MIN(g.grade) FROM grades g))/100) AS grade
+FROM students s
+JOIN grades g ON s.student_id = g.student_id
+JOIN assignments a ON g.assignment_id = a.assignment_id
+GROUP BY s.first_name, s.last_name
+HAVING s.student_id = 100;
+```
+Adebola|Ajayi|90
